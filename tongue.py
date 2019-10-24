@@ -1,0 +1,2 @@
+FTP_SERVER_URL = ""
+CREDENTIALS_FILE_PATH = "credentials.py"
