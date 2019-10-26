@@ -7,7 +7,7 @@ class Main(object):
 	def __init__(self):
 		self._initLogging()
 		self._ftpClient = FtpClient()
-		self._ftpClient.uploadFile("/home/zingero/Downloads/x.jpg")
+		self._ftpClient.uploadFile("/home/orian/Downloads/black.jpg")
 		self._ftpClient.stop()
 
 	def _initLogging(self):

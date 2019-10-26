@@ -8,10 +8,8 @@ import credentials
 
 class FtpClient(object):
 	def __init__(self):
-		self._username = credentials.username
-		self._password = credentials.password
 		self._ftpClient = ftplib.FTP(tongue.FTP_SERVER_URL)
-		self._ftpClient.login(self._username, self._password)
+		self._ftpClient.login(credentials.username, credentials.password)
 		logging.info("FTP client was connected successfully. Welcome message: %s" % self._ftpClient.welcome)
 
 	def uploadFile(self, filePath):
