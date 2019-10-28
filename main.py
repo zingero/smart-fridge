@@ -1,14 +1,14 @@
 import logging
 
-from ftpclient import FtpClient
+from fileuploader import FileUploader
 
 
 class Main(object):
 	def __init__(self):
 		self._initLogging()
-		self._ftpClient = FtpClient()
-		self._ftpClient.uploadFile("/home/orian/Downloads/black.jpg")
-		self._ftpClient.stop()
+		self.__fileUploader = FileUploader()
+		self.__fileUploader.uploadFile("/home/orian/Downloads/cat.jpg")
+		self.__fileUploader.stop()
 
 	def _initLogging(self):
 		logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s', level=logging.DEBUG)
