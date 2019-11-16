@@ -5,10 +5,12 @@ import os
 import tongue
 import credentials
 
+from abstractclient import AbstractClient
 
-class FtpClient(object):
-	def __init__(self):
-		self._ftpClient = ftplib.FTP(tongue.FTP_SERVER_URL)
+
+class FtpClient(AbstractClient):
+	def _login(self):
+		self._ftpClient = ftplib.FTP(tongue.FTP_SERVER_ON_000WEBHOST_URL)
 		self._ftpClient.login(credentials.username, credentials.password)
 		logging.info("FTP client was connected successfully")
 

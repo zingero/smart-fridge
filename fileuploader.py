@@ -3,14 +3,14 @@ from queue import Queue
 from threading import Thread
 
 import tongue
-from ftpclient import FtpClient
+from googledriveclient import GoogleDriveClient
 
 
 class FileUploader(object):
 	def __init__(self):
 		self.__stopped = False
 		self.__queue = Queue()
-		self.__ftpClient = FtpClient()
+		self.__client = GoogleDriveClient()
 		self.__thread = Thread(target=self.run, name="File Uploader")
 		self.__thread.start()
 
@@ -23,11 +23,11 @@ class FileUploader(object):
 			filePath = self.__queue.get()
 			if filePath == tongue.POISON_PILL:
 				break
-			self.__ftpClient.uploadFile(filePath)
+			self.__client.uploadFile(filePath)
 
 	def stop(self):
 		logging.info("Stopping file uploader")
 		self.__stopped = True
 		self.__queue.put(tongue.POISON_PILL)
 		self.__thread.join()
-		self.__ftpClient.stop()
+		self.__client.stop()

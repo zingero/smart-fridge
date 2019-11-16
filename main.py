@@ -12,6 +12,7 @@ class Main(object):
 
 	def _initLogging(self):
 		logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s', level=logging.DEBUG)
+		logging.getLogger('googleapiclient.discovery_cache').setLevel(logging.ERROR)
 
 
 if __name__ == "__main__":
