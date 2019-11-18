@@ -5,6 +5,7 @@ import datetime
 import cv2
 import signal
 
+import photoshop
 import tongue
 from fileuploader import FileUploader
 
@@ -38,7 +39,8 @@ class Main(object):
 			capture = self.__getImage(camera)
 			filePath = os.path.join(tongue.CAPTURES_FOLDER, datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S") + ".png")
 			cv2.imwrite(filePath, capture)
-			# self.__fileUploader.uploadFile(filePath)
+			# if photoshop.isPhotoDark(filePath):
+			# 	self.__fileUploader.uploadFile(filePath)
 			self.__event.wait(timeout = 1)
 			# self.__event.wait(timeout = 0.1)
 
