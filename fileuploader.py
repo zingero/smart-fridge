@@ -19,7 +19,7 @@ class FileUploader(object):
 		logging.info(f"File: {file_path} added to queue")
 
 	def run(self):
-		while True:
+		while not self.__stopped:
 			file_path = self.__queue.get()
 			if file_path == tongue.POISON_PILL:
 				break
