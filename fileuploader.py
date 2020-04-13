@@ -16,7 +16,7 @@ class FileUploader(object):
 
 	def upload_file(self, file_path):
 		self.__queue.put(file_path)
-		logging.info(f"File: {file_path} added to queue")
+		logging.info(f"File: {file_path} added to queue. Pending files quantity: {self.__queue.qsize()}")
 
 	def run(self):
 		while not self.__stopped:
