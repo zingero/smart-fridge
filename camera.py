@@ -15,7 +15,7 @@ class Camera(object):
 			successfully_captured, image = self.__camera.read()
 			if not successfully_captured:
 				return
-			filePath = os.path.join(tongue.CAPTURES_FOLDER,
+			filePath = os.path.join(tongue.LOCAL_CAPTURES_FOLDER,
 									datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S") + ".png")
 			cv2.imwrite(filePath, image)
 			return filePath

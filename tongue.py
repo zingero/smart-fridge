@@ -4,7 +4,8 @@ FTP_SERVER_ON_000WEBHOST_URL = "files.000webhost.com"
 SCOPES = ['https://www.googleapis.com/auth/drive']
 GOOGLE_DRIVE_CREDENTIALS_FILE_PATH = '/etc/smartfridge/credentials.json'
 GOOGLE_DRIVE_TOKEN_FILE_PATH = '/etc/smartfridge/token.pickle'
-CAPTURES_FOLDER = '/var/smartfridge/'
+LOCAL_CAPTURES_FOLDER = '/var/smartfridge/'
+REMOTE_CAPTURES_FOLDER = 'smartfridge'
 
 DARK_PIXEL_THRESHOLD = 50  # 0-255
 DARK_PICTURE_THRESHOLD = 0.5  # 0-1

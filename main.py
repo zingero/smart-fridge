@@ -1,12 +1,8 @@
 import logging
-import os
 import threading
-import datetime
-import cv2
 import signal
 
 import photoshop
-import tongue
 from camera import Camera
 from fileuploader import FileUploader
 
