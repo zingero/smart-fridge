@@ -15,10 +15,10 @@ from abstractclient import AbstractClient
 class GoogleDriveClient(AbstractClient):
 	def __init__(self):
 		super().__init__()
-		if self.__remote_folder_exists():
-			logging.info("Remote folder exists")
+		if self.__is_remote_folder_exists():
+			logging.info("Remote folder exists. Not creating")
 		else:
-			logging.info("Remote folder does not exists")
+			logging.info("Remote folder does not exists. Creating")
 			self.__create_remote_folder()
 
 	def _login(self):
@@ -37,20 +37,23 @@ class GoogleDriveClient(AbstractClient):
 		self.__service = build('drive', 'v3', credentials = credentials)
 		logging.info("Google drive client was connected successfully")
 
-	def __remote_folder_exists(self):
-		MAXIMUM_FILES_DUE_TO_API = 1000
-		files = self.get_files_names_and_ids(how_many = MAXIMUM_FILES_DUE_TO_API)
-		for f in files:
-			if f['name'] == tongue.REMOTE_CAPTURES_FOLDER:
-				self.__folder_id = f['id']
-				return True
+	def __is_remote_folder_exists(self):
+		files = self.__search_for_remote_folder_id()
+		if files:
+			self.__folder_id = files[0]['id']
+			return True
 		return False
 
-	def __create_remote_folder(self):
+	def __search_for_remote_folder_id(self):
+		results = self.__service.files().list(q = f"name='{tongue.REMOTE_CAPTURES_FOLDER}'", fields = "nextPageToken, files(id)").execute()
+		files = results.get('files', [])
+		assert len(files) <= 1, f"There are more than one '{tongue.REMOTE_CAPTURES_FOLDER}' folder in google drive. Results: {results}"
+		return files
 
+	def __create_remote_folder(self):
 		metadata = {
 			'name': tongue.REMOTE_CAPTURES_FOLDER,
-			'mimeType': 'application/vnd.google-apps.folder'
+			'mimeType': tongue.FOLDER_MIME_TYPE
 		}
 		file = self.__service.files().create(body = metadata, fields = 'id').execute()
 		self.__folder_id = file.get('id')
@@ -66,9 +69,3 @@ class GoogleDriveClient(AbstractClient):
 			logging.warning(f"Failed to open file: {file_path}. Exception: {e}")
 		except Exception as e:
 			logging.exception(f"General Error: Failed to upload file: {file_path}. Exception: {e}")
-
-	def get_files_names_and_ids(self, how_many):
-		results = self.__service.files().list(pageSize = how_many, orderBy = "folder", fields="nextPageToken, files(id, name)").execute()
-		files = results.get('files', [])
-		logging.info(f"Files list contains: {len(files)} items")
-		return files
