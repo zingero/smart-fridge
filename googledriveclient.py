@@ -1,8 +1,8 @@
-from __future__ import print_function
 import logging
 import os
 import pickle
 
+import googleapiclient.errors
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
@@ -59,6 +59,7 @@ class GoogleDriveClient(AbstractClient):
 		self.__folder_id = file.get('id')
 
 	def upload_file(self, file_path):
+		self.__rotate()
 		logging.info(f"Uploading file: {file_path}")
 		metadata = {'name': os.path.basename(file_path), 'parents': [self.__folder_id]}
 		try:
@@ -69,3 +70,21 @@ class GoogleDriveClient(AbstractClient):
 			logging.warning(f"Failed to open file: {file_path}. Exception: {e}")
 		except Exception as e:
 			logging.exception(f"General Error: Failed to upload file: {file_path}. Exception: {e}")
+
+	def __rotate(self):
+		files = self.__search_all_captures_in_remote_folder_ordered_by_time_creation()
+		if len(files) < tongue.MAXIMUM_FILES_IN_REMOTE_FOLDER:
+			return
+		self.__delete_file(files[0])
+
+	def __search_all_captures_in_remote_folder_ordered_by_time_creation(self):
+		results = self.__service.files().list(q = f"'{self.__folder_id}' in parents", orderBy = "createdTime", fields = "nextPageToken, files(id)").execute()
+		logging.info(f"Captures in remote folder: {results}")
+		return results.get('files', [])
+
+	def __delete_file(self, file_to_delete):
+		logging.info(f"Removing file: {file_to_delete}")
+		try:
+			self.__service.files().delete(fileId = file_to_delete["id"]).execute()
+		except googleapiclient.errors.HttpError as e:
+			logging.warning(f"Failed to delete file: {file_to_delete}. Exception: {e}")
