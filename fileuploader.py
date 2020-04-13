@@ -14,16 +14,16 @@ class FileUploader(object):
 		self.__thread = Thread(target = self.run, name = "File Uploader")
 		self.__thread.start()
 
-	def uploadFile(self, filePath):
-		self.__queue.put(filePath)
-		logging.info(f"File: {filePath} added to queue")
+	def upload_file(self, file_path):
+		self.__queue.put(file_path)
+		logging.info(f"File: {file_path} added to queue")
 
 	def run(self):
 		while True:
-			filePath = self.__queue.get()
-			if filePath == tongue.POISON_PILL:
+			file_path = self.__queue.get()
+			if file_path == tongue.POISON_PILL:
 				break
-			self.__client.uploadFile(filePath)
+			self.__client.upload_file(file_path)
 
 	def stop(self):
 		logging.info("Stopping file uploader")

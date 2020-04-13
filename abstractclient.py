@@ -10,7 +10,7 @@ class AbstractClient(abc.ABC):
 		pass
 
 	@abc.abstractmethod
-	def uploadFile(self, filePath):
+	def upload_file(self, file_path):
 		pass
 
 	def stop(self):

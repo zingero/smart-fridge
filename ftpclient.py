@@ -14,18 +14,18 @@ class FtpClient(AbstractClient):
 		self._ftpClient.login(credentials.username, credentials.password)
 		logging.info("FTP client was connected successfully")
 
-	def uploadFile(self, filePath):
-		logging.info(f"Uploading file: {filePath}")
+	def upload_file(self, file_path):
+		logging.info(f"Uploading file: {file_path}")
 		try:
-			with open(filePath, "rb") as f:
-				self._ftpClient.storbinary("STOR " + os.path.join("/photos", os.path.basename(filePath)), f)
-			logging.info(f"File: {filePath} uploaded successfully")
+			with open(file_path, "rb") as f:
+				self._ftpClient.storbinary("STOR " + os.path.join("/photos", os.path.basename(file_path)), f)
+			logging.info(f"File: {file_path} uploaded successfully")
 		except OSError as e:
-			logging.warning(f"Failed to open file: {filePath}. Exception: {e}")
+			logging.warning(f"Failed to open file: {file_path}. Exception: {e}")
 		except ftplib.all_errors as e:
-			logging.error(f"FTP Error: Failed to upload file: {filePath}. Exception: {e}")
+			logging.error(f"FTP Error: Failed to upload file: {file_path}. Exception: {e}")
 		except Exception as e:
-			logging.exception(f"General Error: Failed to upload file: {filePath}. Exception: {e}")
+			logging.exception(f"General Error: Failed to upload file: {file_path}. Exception: {e}")
 
 	def stop(self):
 		logging.info("Stopping FTP client")

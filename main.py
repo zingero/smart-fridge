@@ -31,9 +31,9 @@ class Main(object):
 			# self.__event.wait(timeout = 0.1)
 
 	def __runningIteration(self):
-		filePath = self.__camera.capture()
-		if filePath and photoshop.isPhotoDark(filePath):
-			self.__fileUploader.uploadFile(filePath)
+		file_path = self.__camera.capture()
+		if file_path and not photoshop.is_photo_dark(file_path):
+			self.__fileUploader.upload_file(file_path)
 
 	def __stop(self, signalNumber, frame):
 		signal.signal(signalNumber, signal.SIG_IGN)
