@@ -63,8 +63,8 @@ class GoogleDriveClient(AbstractClient):
 		logging.info(f"Uploading file: {file_path}")
 		metadata = {'name': os.path.basename(file_path), 'parents': [self.__folder_id]}
 		try:
-			media = MediaFileUpload(file_path)
-			self.__service.files().create(body = metadata, media_body = media, fields = 'id').execute()
+			media = MediaFileUpload(file_path, mimetype = tongue.PNG_MIME_TYPE)
+			self.__service.files().create(body = metadata, media_body = media).execute()
 			logging.info(f"File: {file_path} uploaded successfully")
 		except OSError as e:
 			logging.warning(f"Failed to open file: {file_path}. Exception: {e}")

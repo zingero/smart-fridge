@@ -7,6 +7,7 @@ GOOGLE_DRIVE_TOKEN_FILE_PATH = '/etc/smartfridge/token.pickle'
 LOCAL_CAPTURES_FOLDER = '/var/smartfridge/'
 REMOTE_CAPTURES_FOLDER = 'smartfridge'
 FOLDER_MIME_TYPE = 'application/vnd.google-apps.folder'
+PNG_MIME_TYPE = 'image/png'
 MAXIMUM_FILES_IN_REMOTE_FOLDER = 100
 
 DARK_PIXEL_THRESHOLD = 50  # 0-255
