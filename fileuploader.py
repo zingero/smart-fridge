@@ -11,12 +11,12 @@ class FileUploader(object):
 		self.__stopped = False
 		self.__queue = Queue()
 		self.__client = GoogleDriveClient()
-		self.__thread = Thread(target=self.run, name="File Uploader")
+		self.__thread = Thread(target = self.run, name = "File Uploader")
 		self.__thread.start()
 
 	def uploadFile(self, filePath):
 		self.__queue.put(filePath)
-		logging.info("File: %s added to queue" % filePath)
+		logging.info(f"File: {filePath} added to queue")
 
 	def run(self):
 		while True:

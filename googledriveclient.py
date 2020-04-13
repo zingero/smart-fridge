@@ -23,24 +23,24 @@ class GoogleDriveClient(AbstractClient):
 				credentials.refresh(Request())
 			else:
 				flow = InstalledAppFlow.from_client_secrets_file(tongue.GOOGLE_DRIVE_CREDENTIALS_FILE_PATH, tongue.SCOPES)
-				credentials = flow.run_local_server(port=0)
+				credentials = flow.run_local_server(port = 0)
 		with open(tongue.GOOGLE_DRIVE_TOKEN_FILE_PATH, 'wb') as token:
 			pickle.dump(credentials, token)
-		self.__service = build('drive', 'v3', credentials=credentials)
+		self.__service = build('drive', 'v3', credentials = credentials)
 		logging.info("Google drive client was connected successfully")
 
 	def uploadFile(self, filePath):
-		logging.info("Uploading file: %s" % filePath)
+		logging.info(f"Uploading file: {filePath}")
 		metadata = {'name': os.path.basename(filePath)}
 		try:
 			media = MediaFileUpload(filePath)
-			self.__service.files().create(body=metadata, media_body=media, fields='id').execute()
-			logging.info("File: %s uploaded successfully" % filePath)
+			self.__service.files().create(body = metadata, media_body = media, fields = 'id').execute()
+			logging.info(f"File: {filePath} uploaded successfully")
 		except OSError as e:
-			logging.warning("Failed to open file: %s. Exception: %s" % (filePath, e))
+			logging.warning(f"Failed to open file: {filePath}. Exception: {e}")
 		except Exception as e:
-			logging.exception("General Error: Failed to upload file: %s. Exception: %s" % (filePath, e))
+			logging.exception(f"General Error: Failed to upload file: {filePath}. Exception: {e}")
 
 	def listFiles(self, howMany):
 		results = self.__service.files().list(pageSize=howMany, fields="nextPageToken, files(id, name)").execute()
-		logging.info("Files list: %s" % results.get('files', []))
+		logging.info(f"Files list: {results.get('files', [])}")
