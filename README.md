@@ -1,4 +1,4 @@
-# Smart_Fridge
+# smart-fridge
 
 Create credentials at: https://developers.google.com/drive/api/v3/quickstart/python
 
