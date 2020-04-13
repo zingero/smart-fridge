@@ -27,7 +27,6 @@ class Main(object):
 		while not self.__event.isSet():
 			self.__runningIteration()
 			self.__event.wait(timeout = 1)
-			# self.__event.wait(timeout = 0.1)
 
 	def __runningIteration(self):
 		file_path = self.__camera.capture()
