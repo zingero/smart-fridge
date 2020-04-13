@@ -7,6 +7,7 @@ import signal
 
 import photoshop
 import tongue
+from camera import Camera
 from fileuploader import FileUploader
 
 
@@ -17,6 +18,7 @@ class Main(object):
 		self.__event = threading.Event()
 		self.__initLogging()
 		self.__fileUploader = FileUploader()
+		self.__camera = Camera()
 		self.__run()
 		self.__fileUploader.stop()
 		logging.info("Process terminated")
@@ -25,24 +27,17 @@ class Main(object):
 		logging.basicConfig(format = '%(asctime)s %(levelname)s %(message)s', level = logging.DEBUG)
 		logging.getLogger('googleapiclient.discovery_cache').setLevel(logging.ERROR)
 
-	def __getImage(self, camera):
-		_, image = camera.read()
-		return image
-
 	def __run(self):
 		while not self.__event.isSet():
 			logging.info("in run")
-			camera_port = 0
-			# camera = cv2.VideoCapture()
-			camera = cv2.VideoCapture(camera_port)
-
-			capture = self.__getImage(camera)
-			filePath = os.path.join(tongue.CAPTURES_FOLDER, datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S") + ".png")
-			cv2.imwrite(filePath, capture)
-			# if photoshop.isPhotoDark(filePath):
-			# 	self.__fileUploader.uploadFile(filePath)
+			self.__runningIteration()
 			self.__event.wait(timeout = 1)
 			# self.__event.wait(timeout = 0.1)
+
+	def __runningIteration(self):
+		filePath = self.__camera.capture()
+		if filePath and photoshop.isPhotoDark(filePath):
+			self.__fileUploader.uploadFile(filePath)
 
 	def __stop(self, signalNumber, frame):
 		signal.signal(signalNumber, signal.SIG_IGN)
