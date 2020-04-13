@@ -20,12 +20,11 @@ class Main(object):
 		logging.info("Process terminated")
 
 	def __initLogging(self):
-		logging.basicConfig(format = '%(asctime)s %(levelname)s %(message)s', level = logging.DEBUG)
+		logging.basicConfig(format = '%(asctime)s %(levelname)s %(message)s', level = logging.INFO)
 		logging.getLogger('googleapiclient.discovery_cache').setLevel(logging.ERROR)
 
 	def __run(self):
 		while not self.__event.isSet():
-			logging.info("in run")
 			self.__runningIteration()
 			self.__event.wait(timeout = 1)
 			# self.__event.wait(timeout = 0.1)
