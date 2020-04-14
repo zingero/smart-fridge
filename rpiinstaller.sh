@@ -25,7 +25,7 @@ sudo apt-get install -y python3-dev
 wget https://bootstrap.pypa.io/get-pip.py
 sudo python get-pip.py
 sudo python3 get-pip.py
-sudo rm -rf ~/.cache/pip
+sudo rm -rf ~/.cache/pip get-pip.py
 sudo pip install virtualenv virtualenvwrapper
 echo "# virtualenv and virtualenvwrapper" >> ~/.bashrc
 echo "export WORKON_HOME=\$HOME/.virtualenvs" >> ~/.bashrc
