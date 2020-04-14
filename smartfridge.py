@@ -15,12 +15,12 @@ class SmartFridge:
 	def start(self):
 		while not self.__should_stop_function():
 			try:
-				self.__runningIteration()
+				self.__running_iteration()
 			except Exception as e:
 				logging.exception(f"Running failure: {e}")
 				return
 
-	def __runningIteration(self):
+	def __running_iteration(self):
 		file_path = self.__camera.capture()
 		if file_path:
 			if photoshop.is_photo_dark(file_path):

@@ -10,7 +10,7 @@ class Main:
 		signal.signal(signal.SIGTERM, self.__stop)
 		signal.signal(signal.SIGINT, self.__stop)
 		self.__event = threading.Event()
-		self.__initLogging()
+		self.__init_logging()
 		self.__smart_fridge = SmartFridge(self.__event.is_set)
 
 	def run(self):
@@ -18,12 +18,12 @@ class Main:
 		self.__smart_fridge.stop()
 		logging.info("Process terminated")
 
-	def __initLogging(self):
+	def __init_logging(self):
 		logging.basicConfig(format = '%(asctime)s %(levelname)s %(message)s', level = logging.INFO)
 		logging.getLogger('googleapiclient.discovery_cache').setLevel(logging.ERROR)
 
-	def __stop(self, signalNumber, frame):
-		signal.signal(signalNumber, signal.SIG_IGN)
+	def __stop(self, signal_number, _):
+		signal.signal(signal_number, signal.SIG_IGN)
 		self.__event.set()
 
 
