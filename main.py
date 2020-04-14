@@ -25,7 +25,11 @@ class Main(object):
 
 	def __run(self):
 		while not self.__event.isSet():
-			self.__runningIteration()
+			try:
+				self.__runningIteration()
+			except Exception as e:
+				logging.exception(f"Running failure: {e}")
+				return
 			self.__event.wait(timeout = 1)
 
 	def __runningIteration(self):
