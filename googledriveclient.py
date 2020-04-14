@@ -81,8 +81,9 @@ class GoogleDriveClient(AbstractClient):
 
 	def __search_all_captures_in_remote_folder_ordered_by_time_creation(self):
 		results = self.__service.files().list(q = f"'{self.__folder_id}' in parents", orderBy = "createdTime", fields = "nextPageToken, files(id)").execute()
-		logging.info(f"Captures quantity in remote folder: {len(results)}")
-		return results.get('files', [])
+		files = results.get('files', [])
+		logging.info(f"Captures quantity in remote folder: {len(files)}")
+		return files
 
 	def __delete_file(self, file_to_delete):
 		logging.info(f"Removing file: {file_to_delete}")
