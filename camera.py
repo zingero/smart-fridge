@@ -6,7 +6,7 @@ import cv2
 import tongue
 
 
-class Camera(object):
+class Camera:
 	def __init__(self):
 		self.__camera = cv2.VideoCapture(0)
 

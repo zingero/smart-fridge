@@ -8,7 +8,7 @@ from camera import Camera
 from fileuploader import FileUploader
 
 
-class Main(object):
+class Main:
 	def __init__(self):
 		signal.signal(signal.SIGTERM, self.__stop)
 		signal.signal(signal.SIGINT, self.__stop)

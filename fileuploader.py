@@ -7,7 +7,7 @@ import tongue
 from googledriveclient import GoogleDriveClient
 
 
-class FileUploader(object):
+class FileUploader:
 	def __init__(self):
 		self.__stopped = False
 		self.__queue = Queue()
