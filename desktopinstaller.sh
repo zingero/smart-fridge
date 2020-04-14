@@ -1,4 +1,5 @@
 sudo mkdir /etc/smartfridge/
+sudo echo "{}" > /etc/smartfridge/configuration.json
 sudo mkdir /var/smartfridge/
 
 pip3 install opencv-python

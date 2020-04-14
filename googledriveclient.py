@@ -10,6 +10,7 @@ from google.auth.transport.requests import Request
 from googleapiclient.http import MediaFileUpload
 
 import tongue
+import configuration
 from abstractclient import AbstractClient
 
 
@@ -46,14 +47,14 @@ class GoogleDriveClient(AbstractClient):
 		return False
 
 	def __search_for_remote_folder_id(self):
-		results = self.__service.files().list(q = f"name='{tongue.REMOTE_CAPTURES_FOLDER}'", fields = "nextPageToken, files(id)").execute()
+		results = self.__service.files().list(q = f"name='{configuration.REMOTE_CAPTURES_FOLDER}'", fields = "nextPageToken, files(id)").execute()
 		files = results.get('files', [])
-		assert len(files) <= 1, f"There are more than one '{tongue.REMOTE_CAPTURES_FOLDER}' folder in google drive. Results: {results}"
+		assert len(files) <= 1, f"There are more than one '{configuration.REMOTE_CAPTURES_FOLDER}' folder in google drive. Results: {results}"
 		return files
 
 	def __create_remote_folder(self):
 		metadata = {
-			'name': tongue.REMOTE_CAPTURES_FOLDER,
+			'name': configuration.REMOTE_CAPTURES_FOLDER,
 			'mimeType': tongue.FOLDER_MIME_TYPE
 		}
 		file = self.__service.files().create(body = metadata, fields = 'id').execute()
@@ -75,7 +76,7 @@ class GoogleDriveClient(AbstractClient):
 
 	def __rotate(self):
 		files = self.__search_all_captures_in_remote_folder_ordered_by_time_creation()
-		if len(files) < tongue.MAXIMUM_FILES_IN_REMOTE_FOLDER:
+		if len(files) < configuration.MAXIMUM_FILES_IN_REMOTE_FOLDER:
 			return
 		self.__delete_file(files[0])
 

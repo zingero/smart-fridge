@@ -1,5 +1,6 @@
 sudo mkdir /etc/smartfridge/
 sudo chown pi:pi /etc/smartfridge/
+echo "{}" > /etc/smartfridge/configuration.json
 sudo mkdir /var/smartfridge/
 sudo chown pi:pi /var/smartfridge/
 

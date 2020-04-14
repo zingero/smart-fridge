@@ -3,6 +3,7 @@ import threading
 import signal
 
 from smartfridge import SmartFridge
+from configuration import configuration
 
 
 class Main:
@@ -21,6 +22,7 @@ class Main:
 	def __init_logging(self):
 		logging.basicConfig(format = '%(asctime)s %(levelname)s %(message)s', level = logging.INFO)
 		logging.getLogger('googleapiclient.discovery_cache').setLevel(logging.ERROR)
+		logging.info(f"Using configuration: {configuration}")
 
 	def __stop(self, signal_number, _):
 		signal.signal(signal_number, signal.SIG_IGN)

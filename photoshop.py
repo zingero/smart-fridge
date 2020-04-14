@@ -1,7 +1,7 @@
 import os
 from PIL import Image
 
-import tongue
+import configuration
 
 
 def is_photo_clear(file_path):
@@ -13,21 +13,21 @@ def is_photo_clear(file_path):
 def is_photo_dark(pixels):
 	dark_pixels_number = 0
 	for pixel in pixels:
-		if pixel < tongue.DARK_PIXEL_THRESHOLD:
+		if pixel < configuration.DARK_PIXEL_THRESHOLD:
 			dark_pixels_number += 1
-	return (dark_pixels_number / float(len(pixels))) > tongue.DARK_PICTURE_THRESHOLD
+	return (dark_pixels_number / float(len(pixels))) > configuration.DARK_PICTURE_THRESHOLD
 
 
 def is_photo_bright(pixels):
 	bright_pixels_number = 0
 	for pixel in pixels:
-		if pixel > tongue.BRIGHT_PIXEL_THRESHOLD:
+		if pixel > configuration.BRIGHT_PIXEL_THRESHOLD:
 			bright_pixels_number += 1
-	return (bright_pixels_number / float(len(pixels))) > tongue.BRIGHT_PICTURE_THRESHOLD
+	return (bright_pixels_number / float(len(pixels))) > configuration.BRIGHT_PICTURE_THRESHOLD
 
 
 def rotate_photo(file_path):
-	if tongue.ROTATION_ANGLE != 0:
+	if configuration.ROTATION_ANGLE != 0:
 		image = Image.open(file_path)
-		image = image.rotate(angle = tongue.ROTATION_ANGLE, expand = True)
+		image = image.rotate(angle = configuration.ROTATION_ANGLE, expand = True)
 		image.save(file_path)
