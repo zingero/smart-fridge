@@ -40,3 +40,7 @@ pip3 install --upgrade testresources
 pip3 install --upgrade setuptools
 pip3 install --upgrade google-api-python-client
 pip3 install google-auth-oauthlib
+
+sudo cp /home/pi/smart-fridge/smart-fridge.service /etc/systemd/system/
+sudo systemctl enable smart-fridge.service
+sudo systemctl start smart-fridge.service
