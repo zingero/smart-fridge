@@ -1,3 +1,4 @@
+import time
 import logging
 import os
 import pickle
@@ -64,8 +65,9 @@ class GoogleDriveClient(AbstractClient):
 		metadata = {'name': os.path.basename(file_path), 'parents': [self.__folder_id]}
 		try:
 			media = MediaFileUpload(file_path, mimetype = tongue.PNG_MIME_TYPE)
+			starting_time = time.time()
 			self.__service.files().create(body = metadata, media_body = media).execute()
-			logging.info(f"File: {file_path} uploaded successfully")
+			logging.info(f"File: {file_path} uploaded successfully in: {time.time() - starting_time} seconds")
 		except OSError as e:
 			logging.warning(f"Failed to open file: {file_path}. Exception: {e}")
 		except Exception as e:
