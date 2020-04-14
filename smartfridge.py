@@ -23,10 +23,10 @@ class SmartFridge:
 	def __running_iteration(self):
 		file_path = self.__camera.capture()
 		if file_path:
-			if photoshop.is_photo_dark(file_path):
-				os.remove(file_path)
-			else:
+			if photoshop.is_photo_clear(file_path):
 				self.__fileUploader.upload_file(file_path)
+			else:
+				os.remove(file_path)
 
 	def stop(self):
 		self.__fileUploader.stop()
