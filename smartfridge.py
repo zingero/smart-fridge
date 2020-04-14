@@ -24,6 +24,7 @@ class SmartFridge:
 		file_path = self.__camera.capture()
 		if file_path:
 			if photoshop.is_photo_clear(file_path):
+				photoshop.rotate_photo(file_path)
 				self.__fileUploader.upload_file(file_path)
 			else:
 				os.remove(file_path)
