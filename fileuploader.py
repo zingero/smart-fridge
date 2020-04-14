@@ -1,3 +1,4 @@
+import os
 import logging
 from queue import Queue
 from threading import Thread
@@ -24,6 +25,7 @@ class FileUploader(object):
 			if file_path == tongue.POISON_PILL:
 				break
 			self.__client.upload_file(file_path)
+			os.remove(file_path)
 
 	def stop(self):
 		logging.info("Stopping file uploader")
@@ -31,3 +33,8 @@ class FileUploader(object):
 		self.__queue.put(tongue.POISON_PILL)
 		self.__thread.join()
 		self.__client.stop()
+		self.__remove_all_local_captures()
+
+	def __remove_all_local_captures(self):
+		for capture in os.listdir(tongue.LOCAL_CAPTURES_FOLDER):
+			os.remove(os.path.join(tongue.LOCAL_CAPTURES_FOLDER, capture))

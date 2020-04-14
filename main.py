@@ -1,4 +1,5 @@
 import logging
+import os
 import threading
 import signal
 
@@ -34,8 +35,11 @@ class Main(object):
 
 	def __runningIteration(self):
 		file_path = self.__camera.capture()
-		if file_path and not photoshop.is_photo_dark(file_path):
-			self.__fileUploader.upload_file(file_path)
+		if file_path:
+			if photoshop.is_photo_dark(file_path):
+				os.remove(file_path)
+			else:
+				self.__fileUploader.upload_file(file_path)
 
 	def __stop(self, signalNumber, frame):
 		signal.signal(signalNumber, signal.SIG_IGN)
