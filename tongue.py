@@ -1,5 +1,3 @@
-FTP_SERVER_ON_000WEBHOST_URL = "files.000webhost.com"
-
 # If modifying these scopes, delete the file token.pickle.
 SCOPES = ['https://www.googleapis.com/auth/drive']
 GOOGLE_DRIVE_CREDENTIALS_FILE_PATH = '/etc/smartfridge/credentials.json'
