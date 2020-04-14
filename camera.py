@@ -16,7 +16,7 @@ class Camera:
 			if not successfully_captured:
 				return
 			file_path = os.path.join(tongue.LOCAL_CAPTURES_FOLDER,
-									datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S") + ".png")
+									datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S.%f") + ".png")
 			cv2.imwrite(file_path, image)
 			return file_path
 		except cv2.error as e:
