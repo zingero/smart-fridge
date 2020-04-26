@@ -36,5 +36,7 @@ class FileUploader:
 		self.__remove_all_local_captures()
 
 	def __remove_all_local_captures(self):
-		for capture in os.listdir(tongue.LOCAL_CAPTURES_FOLDER):
+		captures = os.listdir(tongue.LOCAL_CAPTURES_FOLDER)
+		logging.warning(f"Removing: {len(captures)} photos before uploading them")
+		for capture in captures:
 			os.remove(os.path.join(tongue.LOCAL_CAPTURES_FOLDER, capture))
