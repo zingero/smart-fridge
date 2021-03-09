@@ -3,6 +3,7 @@
 For more information:
 
 https://orianzinger.wordpress.com/2021/02/02/smart-fridge-part-1/
+
 https://orianzinger.wordpress.com/2021/02/18/smart-fridge-part-2/
 
 Create credentials at: https://developers.google.com/drive/api/v3/quickstart/python
